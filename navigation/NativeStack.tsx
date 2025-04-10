@@ -1,6 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 
+import { Colors } from '../constants/colors';
 import { TypeRootStackParamList } from './types';
 
 import { AllPlaces } from '../screens/AllPlaces';
@@ -12,7 +13,13 @@ const Stack = createNativeStackNavigator<TypeRootStackParamList>();
 export const Navigation = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator
+        screenOptions={{
+          headerStyle: { backgroundColor: Colors.primary500 },
+          headerTintColor: Colors.gray700,
+          contentStyle: { backgroundColor: Colors.gray700 },
+        }}
+      >
         <Stack.Screen
           name="AllPlaces"
           component={AllPlaces}
@@ -27,7 +34,13 @@ export const Navigation = () => {
             ),
           })}
         />
-        <Stack.Screen name="AddPlace" component={AddPlace} />
+        <Stack.Screen
+          name="AddPlace"
+          component={AddPlace}
+          options={{
+            title: 'Add a new Place',
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
