@@ -1,6 +1,9 @@
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RouteProp } from '@react-navigation/native';
 
 export type TypeRootStackParamList  = {
   AllPlaces: undefined;
-  AddPlace: undefined;
+  AddPlace: {lat: number, lng: number};
+  Map: undefined;
 };
+
+export type AddPlaceRouteProp = RouteProp<TypeRootStackParamList, 'AddPlace'>;

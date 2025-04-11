@@ -6,6 +6,7 @@ import { TypeRootStackParamList } from './types';
 
 import { AllPlaces } from '../screens/AllPlaces';
 import { AddPlace } from '../screens/AddPlace';
+import { Map } from '../screens/Map';
 import { IconButton } from '../components/ui/IconButton';
 
 const Stack = createNativeStackNavigator<TypeRootStackParamList>();
@@ -41,6 +42,7 @@ export const Navigation = () => {
             title: 'Add a new Place',
           }}
         />
+        <Stack.Screen name="Map" component={Map} />
       </Stack.Navigator>
     </NavigationContainer>
   );
