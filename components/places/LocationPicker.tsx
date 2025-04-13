@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { View, Alert, Text, StyleSheet } from 'react-native';
+import { View, Alert, StyleSheet } from 'react-native';
 import { useNavigation, useRoute, useIsFocused } from '@react-navigation/native';
 import { getCurrentPositionAsync, useForegroundPermissions, PermissionStatus } from 'expo-location';
 
@@ -84,7 +84,7 @@ export const LocationPicker = () => {
   return (
     <View>
       <View style={styles.mapPreviewContainer}>
-        <MapViewContainer selectedLocation={pickedLocation} zoomLevel={0.005}/>
+        <MapViewContainer selectedLocation={pickedLocation} zoomLevel={0.005} />
       </View>
 
       {/*<View style={styles.mapPreview}>

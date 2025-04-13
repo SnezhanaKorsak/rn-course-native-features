@@ -11,25 +11,25 @@ type Props = {
   onPress?: (event: MapPressEvent) => void;
 }
 
-export const MapViewContainer = ({ selectedLocation, zoomLevel, onPress }: Props) => {
+export const MapViewContainer = ({ selectedLocation, onPress }: Props) => {
   const zoom = 0.07;
 
   const [region, setRegion] = useState({
     latitude: selectedLocation ? selectedLocation.lat : 53.9,
     longitude: selectedLocation ? selectedLocation.lng : 27.57,
-    latitudeDelta: zoom ,
+    latitudeDelta: zoom,
     longitudeDelta: zoom,
-  })
+  });
   const isFocused = useIsFocused();
 
   useEffect(() => {
-    if(selectedLocation && isFocused) {
+    if (selectedLocation && isFocused) {
       setRegion({
         latitude: selectedLocation.lat,
         longitude: selectedLocation.lng,
         latitudeDelta: zoom,
         longitudeDelta: zoom,
-      })
+      });
     }
 
   }, [selectedLocation, isFocused]);

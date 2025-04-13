@@ -1,6 +1,6 @@
 import { useCallback, useLayoutEffect, useState } from 'react';
-import { Alert, StyleSheet } from 'react-native';
-import MapView, { MapPressEvent, Marker } from 'react-native-maps';
+import { Alert } from 'react-native';
+import { MapPressEvent } from 'react-native-maps';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
@@ -9,13 +9,6 @@ import { Location } from '../types';
 
 import { IconButton } from '../components/ui/IconButton';
 import { MapViewContainer } from '../components/places/MapViewContainer';
-
-const region = {
-  latitude: 107.78,
-  longitude: -122.43,
-  latitudeDelta: 0.0922,
-  longitudeDelta: 0.0421,
-};
 
 export const Map = () => {
   const navigation = useNavigation<NativeStackNavigationProp<TypeRootStackParamList>>();
