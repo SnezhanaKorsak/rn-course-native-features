@@ -1,7 +1,8 @@
 import { RouteProp } from '@react-navigation/native';
+import { PlaceType } from '../types';
 
 export type TypeRootStackParamList = {
-  AllPlaces: undefined;
+  AllPlaces: { place: PlaceType };
   AddPlace: { lat: number, lng: number } | undefined;
   Map: undefined;
 };

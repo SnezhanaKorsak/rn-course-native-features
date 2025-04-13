@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Alert, View, Text, Image, StyleSheet } from 'react-native';
 import {
   launchCameraAsync,
@@ -10,10 +9,13 @@ import { Colors } from '../../constants/colors';
 
 import { OutlinedButton } from '../ui/OutlinedButton';
 
-export const ImagePicker = () => {
-  const [cameraPermissionInformation, requestPermission] = useCameraPermissions();
+type Props = {
+  selectedImage: string;
+  onTakeImage: (imageUri: string) => void;
+}
 
-  const [pickedImage, setPickedImage] = useState('');
+export const ImagePicker = ({ selectedImage, onTakeImage }: Props) => {
+  const [cameraPermissionInformation, requestPermission] = useCameraPermissions();
 
   const verifyPermissions = async () => {
     // Если статус неопределён, запрашиваем
@@ -56,14 +58,15 @@ export const ImagePicker = () => {
     });
 
     if (image?.assets) {
-      setPickedImage(image.assets[0]?.uri);
+      const imageUri = image.assets[0]?.uri;
+      onTakeImage(imageUri);
     }
   };
 
   let imagePreview = <Text>No image taken yet.</Text>;
 
-  if (pickedImage) {
-    imagePreview = <Image style={styles.image} source={{ uri: pickedImage }} />;
+  if (selectedImage) {
+    imagePreview = <Image style={styles.image} source={{ uri: selectedImage }} />;
   }
 
   return (

@@ -10,3 +10,5 @@ export type Location = {
   lat: number;
   lng: number;
 }
+
+export type PickedLocation = Location & {address: string};

@@ -1,18 +1,67 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useFocusEffect } from '@react-navigation/native';
 
 import { Colors } from '../../constants/colors';
+import { PickedLocation, PlaceType } from '../../types';
+import { Place } from '../../models/place';
+
 import { ImagePicker } from './ImagePicker';
 import { LocationPicker } from './LocationPicker';
+import { CustomButton } from '../ui/CustomButton';
 
-type Props = {}
+type Props = {
+  onCreatePlace: (placeData: PlaceType) => void;
+}
 
-export const PlaceForm = ({}: Props) => {
+export const PlaceForm = ({ onCreatePlace }: Props) => {
   const [enteredTitle, setEnteredTitle] = useState('');
+  const [selectedImage, setSelectedImage] = useState('');
+  const [pickedLocation, setPickedLocation] = useState<PickedLocation | null>(null);
 
-  const changeTitleHandler = (enteredText: string) => {
+  const changeTitleHandler = async (enteredText: string) => {
     setEnteredTitle(enteredText);
-  }
+    await AsyncStorage.setItem('form-title', enteredText);
+  };
+
+  const takeImageHandler = async (imageUri: string) => {
+    setSelectedImage(imageUri);
+    await AsyncStorage.setItem('form-image', imageUri);
+  };
+
+  const pickLocationHandler = useCallback((location: PickedLocation) => {
+    setPickedLocation(location);
+
+  }, []);
+
+  const savePlaceHandler = async () => {
+    console.log(enteredTitle);
+    console.log(selectedImage);
+    console.log(pickedLocation);
+
+    if (pickedLocation) {
+      const address = pickedLocation?.address;
+      const placeData = new Place(enteredTitle, selectedImage, address, pickedLocation);
+      onCreatePlace(placeData);
+    }
+
+    await AsyncStorage.multiRemove(['form-title', 'form-image']);
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      const loadFormData = async () => {
+        const savedTitle = await AsyncStorage.getItem('form-title');
+        const savedImage = await AsyncStorage.getItem('form-image');
+        console.log('Сохранённое изображение ddd:', savedImage);
+        if (savedTitle) setEnteredTitle(savedTitle);
+        if (savedImage) setSelectedImage(savedImage);
+      };
+
+      loadFormData();
+    }, [])
+  );
 
   return (
     <ScrollView style={styles.form}>
@@ -24,8 +73,9 @@ export const PlaceForm = ({}: Props) => {
           value={enteredTitle}
         />
       </View>
-      <ImagePicker />
-      <LocationPicker />
+      <ImagePicker selectedImage={selectedImage} onTakeImage={takeImageHandler} />
+      <LocationPicker onPickLocation={pickLocationHandler} />
+      <CustomButton onPress={savePlaceHandler}>Add Place</CustomButton>
     </ScrollView>
   );
 };
