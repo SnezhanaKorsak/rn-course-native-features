@@ -10,7 +10,7 @@ import { PlaceType } from '../types';
 export const AddPlace = () => {
   const navigation = useNavigation<NativeStackNavigationProp<TypeRootStackParamList>>();
 
-  const onCreatePlace = async (place: PlaceType) => {
+  const onCreatePlace = async (place: Omit<PlaceType, 'id'>) => {
     await insertPlace(place);
     navigation.navigate('AllPlaces', { place });
   };

@@ -19,7 +19,7 @@ export const init = () => {
     `);
 };
 
-export const insertPlace = (place: PlaceType) => {
+export const insertPlace = (place: Omit<PlaceType, 'id'>) => {
   return database.runAsync(
     `
             INSERT INTO places (title, imageUri, address, lat, lng)
@@ -42,6 +42,7 @@ export const fetchPlaces = async () => {
 
   for (const dp of result) {
     const place = new Place(
+      dp.id,
       dp.title,
       dp.imageUri,
       dp.address,
@@ -54,4 +55,21 @@ export const fetchPlaces = async () => {
   }
 
   return places;
+};
+
+export const fetchPlaceDetails = async (id: string) => {
+  const dbPlace = await database.getFirstAsync<DBPlaceType>(
+    'SELECT * FROM places WHERE id = ?',
+    [id]
+  );
+
+  if (!dbPlace) return null;
+
+  return new Place(
+    dbPlace.id,
+    dbPlace.title,
+    dbPlace.imageUri,
+    dbPlace.address,
+    { lat: dbPlace.lat, lng: dbPlace.lng, },
+  );
 };

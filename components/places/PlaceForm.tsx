@@ -5,14 +5,13 @@ import { useFocusEffect } from '@react-navigation/native';
 
 import { Colors } from '../../constants/colors';
 import { PickedLocation, PlaceType } from '../../types';
-import { Place } from '../../models/place';
 
 import { ImagePicker } from './ImagePicker';
 import { LocationPicker } from './LocationPicker';
 import { CustomButton } from '../ui/CustomButton';
 
 type Props = {
-  onCreatePlace: (placeData: PlaceType) => void;
+  onCreatePlace: (placeData: Omit<PlaceType, 'id'>) => void;
 }
 
 export const PlaceForm = ({ onCreatePlace }: Props) => {
@@ -38,7 +37,12 @@ export const PlaceForm = ({ onCreatePlace }: Props) => {
   const savePlaceHandler = async () => {
     if (pickedLocation) {
       const address = pickedLocation?.address;
-      const placeData = new Place(enteredTitle, selectedImage, address, pickedLocation);
+      const placeData = {
+        title: enteredTitle,
+        imageUri: selectedImage,
+        address: address,
+        location: pickedLocation,
+      };
       onCreatePlace(placeData);
     }
 
