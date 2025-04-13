@@ -12,3 +12,5 @@ export type Location = {
 }
 
 export type PickedLocation = Location & {address: string};
+
+export type DBPlaceType = Omit<PlaceType, 'location'> & Location;
