@@ -10,7 +10,7 @@ import { Location, PickedLocation } from '../../types';
 import { OutlinedButton } from '../ui/OutlinedButton';
 import { AddPlaceRouteProp, TypeRootStackParamList } from '../../navigation/types';
 import { MapViewContainer } from './MapViewContainer';
-import { getAddress, getAddressFromCoords } from '../../utils/location';
+import { getAddressFromCoords } from '../../utils/location';
 
 type Props = {
   onPickLocation: (location: PickedLocation) => void;

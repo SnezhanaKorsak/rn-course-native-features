@@ -28,7 +28,6 @@ export const ImagePicker = ({ selectedImage, onTakeImage }: Props) => {
     // Если статус "отказано", пробуем повторно запросить
     if (cameraPermissionInformation?.status === PermissionStatus.DENIED) {
       const permissionResponse = await requestPermission();
-      console.log('Repeated permission request:', permissionResponse);
 
       if (!permissionResponse.granted) {
         Alert.alert(

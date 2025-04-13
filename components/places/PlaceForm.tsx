@@ -36,10 +36,6 @@ export const PlaceForm = ({ onCreatePlace }: Props) => {
   }, []);
 
   const savePlaceHandler = async () => {
-    console.log(enteredTitle);
-    console.log(selectedImage);
-    console.log(pickedLocation);
-
     if (pickedLocation) {
       const address = pickedLocation?.address;
       const placeData = new Place(enteredTitle, selectedImage, address, pickedLocation);
@@ -54,7 +50,7 @@ export const PlaceForm = ({ onCreatePlace }: Props) => {
       const loadFormData = async () => {
         const savedTitle = await AsyncStorage.getItem('form-title');
         const savedImage = await AsyncStorage.getItem('form-image');
-        console.log('Сохранённое изображение ddd:', savedImage);
+
         if (savedTitle) setEnteredTitle(savedTitle);
         if (savedImage) setSelectedImage(savedImage);
       };

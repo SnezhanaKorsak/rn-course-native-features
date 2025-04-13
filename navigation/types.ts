@@ -8,3 +8,4 @@ export type TypeRootStackParamList = {
 };
 
 export type AddPlaceRouteProp = RouteProp<TypeRootStackParamList, 'AddPlace'>;
+export type AllPlaceRouteProp = RouteProp<TypeRootStackParamList, 'AllPlaces'>;
