@@ -17,7 +17,13 @@ export const PlaceDetails = () => {
 
   const [fetchedPlace, setFetchedPlace] = useState<Place | null>(null);
 
-  function showOnMapHandler() {
+  const showOnMapHandler = () => {
+    if(!fetchedPlace) return;
+
+    navigation.navigate('Map', {
+      initialLat: fetchedPlace.location.lat,
+      initialLng: fetchedPlace.location.lng,
+    });
   }
 
   const selectedPlaceId = params.placeId;
